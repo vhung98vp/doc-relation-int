@@ -1,0 +1,30 @@
+{
+    "search_fields":{
+        "person": ["identityId_s_srcha", "nationalId_s_srcha", "passportId_s_srcha", "phone_s_srcha", 
+                    "licencePlateNumber_s_srcha", "taxCode_s_srcha", "socialInsuranceNumber_s_srcha", "healthInsuranceNumber_s_srcha"],
+        "company": ["taxCode_s_srcha", "phone_s_srcha"]
+    },
+    "search_keys": {
+        "IdentityId": "identityId_s_srcha",
+        "NationalId": "nationalId_s_srcha",
+        "PassportId": "passportId_s_srcha",
+        "Phone": "phone_s_srcha",
+        "LicensePlateNumber": "licencePlateNumber_s_srcha",
+        "TaxCode": "taxCode_s_srcha",
+        "SocialInsurance": "socialInsuranceNumber_s_srcha",
+        "HealthInsurance": "healthInsuranceNumber_s_srcha"
+    },
+    "relation_properties": {
+        "relation_type": "relationType",
+        "relation_id": "relationId",
+        "from_entity": "fromEntity",
+        "to_entity": "toEntity",
+        "from_entity_type": "fromEntityType",
+        "to_entity_type": "toEntityType",
+        "from_source": "fromSource",
+        "to_source": "toSource",
+        "from_datasource": "fromDataSource",
+        "to_datasource": "toDataSource",
+        "create_user": "createUser"
+    }
+}

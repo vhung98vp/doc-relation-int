@@ -1,0 +1,60 @@
+import requests
+from .config import ES, get_logger
+logger = get_logger(__name__)
+
+def query_entity(query_vals, index, size=10000):
+    url = f"{ES['url']}/{index}/_search"
+    auth = (ES['user'], ES['password']) if ES['user'] and ES['password'] else None
+    headers = {'Content-Type': 'application/json'}
+    query = {
+        "query": {
+            "bool": {
+                "should": [
+                    {"terms": {f"properties.{key}": vals}} 
+                        for key, vals in query_vals.items()
+                ],
+                "minimum_should_match": 1
+            }
+        },
+        "_source": ["id", "entity", "source", "data_source", "properties"],
+        "size": size
+    }
+    try:
+        response = requests.get(url=url,
+                                    headers=headers,
+                                    auth=auth,
+                                    json=query)
+        response.raise_for_status()
+        response_hits = response.json()['hits']['hits']
+        if not response_hits:
+            logger.warning(f"No entity found for values: {query_vals}")
+            return None
+        else:
+            return hits_to_records(response_hits, query_vals)
+
+    except Exception as e:
+        logger.error(f"Failed to fetch from Elasticsearch: {e}")
+        return None
+
+
+def hit_to_record(hit):
+    return {
+        key: hit['_source'][key] for key in ['id', 'entity', 'source', 'data_source']
+    }
+
+def hits_to_records(hits, query_vals):
+    val_to_recs = {}
+    ids = set()
+    for hit in hits:
+        for key, vals in query_vals.items():
+            prop_val = hit['_source']['properties'].get(key)
+            if prop_val:
+                ids.add(hit['_source']['id'])
+                if isinstance(prop_val, list):
+                    for v in prop_val:
+                        if v in vals:
+                            val_to_recs.setdefault(v, []).append(hit_to_record(hit))
+                else:
+                    if prop_val in vals:
+                        val_to_recs.setdefault(prop_val, []).append(hit_to_record(hit))
+    return val_to_recs, ids
