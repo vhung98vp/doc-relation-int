@@ -35,7 +35,6 @@ def process_vals_table(vals_table, val_to_recs):
         for record in row:
             row_records.extend(val_to_recs.get(record, []))
 
-        row_records = list(set(row_records))
         if len(row_records) > 1:
             for val_a, val_b in combinations(row_records, 2):
                 send_output_to_kafka(build_relation_message(val_a, val_b))
