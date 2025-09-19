@@ -39,7 +39,7 @@ KAFKA_PRODUCER_CONFIG = {
 
 ES = {
     'url': os.environ.get('ES_URL'),
-    'username': os.environ.get('ES_USER'),
+    'user': os.environ.get('ES_USER'),
     'password': os.environ.get('ES_PASSWORD'),
     'relation_type': os.environ.get('ES_RELATION_TYPE'),
     'create_user': int(os.environ.get('ES_CREATE_USER', 1)),
