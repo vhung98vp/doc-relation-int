@@ -1,5 +1,5 @@
 import requests
-from .config import ES, get_logger
+from config import ES, get_logger
 logger = get_logger(__name__)
 
 def query_entity(query_vals, index, size=10000):

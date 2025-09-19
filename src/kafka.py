@@ -3,10 +3,10 @@ import time
 import uuid
 from itertools import combinations
 from confluent_kafka import Consumer, Producer
-from .config import get_logger, KAFKA, KAFKA_CONSUMER_CONFIG, KAFKA_PRODUCER_CONFIG, ES_COMPANY, ES_PERSON, ES_DOC
-from .pattern import classify_by_type
-from .es import query_entity
-from .utils import build_relation_message
+from config import get_logger, KAFKA, KAFKA_CONSUMER_CONFIG, KAFKA_PRODUCER_CONFIG, ES_COMPANY, ES_PERSON, ES_DOC
+from pattern import classify_by_type
+from es import query_entity
+from utils import build_relation_message
 logger = get_logger(__name__)
 
 # Kafka setup

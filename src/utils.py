@@ -1,5 +1,5 @@
 import uuid
-from .config import ES, ES_RL_PROPERTY
+from config import ES, ES_RL_PROPERTY
     
 
 def build_relation_message(val_a, val_b, type_a=None, type_b=None):
