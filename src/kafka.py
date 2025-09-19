@@ -6,7 +6,7 @@ from confluent_kafka import Consumer, Producer
 from config import get_logger, KAFKA, KAFKA_CONSUMER_CONFIG, KAFKA_PRODUCER_CONFIG, ES_COMPANY, ES_PERSON, ES_DOC
 from pattern import classify_by_type
 from es import query_entity
-from utils import build_relation_message
+from utils import build_relation_message, unique_dict_list, merge_dicts
 logger = get_logger(__name__)
 
 # Kafka setup
@@ -35,20 +35,13 @@ def process_vals_table(vals_table, val_to_recs):
         for record in row:
             row_records.extend(val_to_recs.get(record, []))
 
+        row_records = unique_dict_list(row_records)
         if len(row_records) > 1:
             for val_a, val_b in combinations(row_records, 2):
                 send_output_to_kafka(build_relation_message(val_a, val_b))
                 count += 1
     logger.info(f"Processed {count} relations from table ids.")
 
-
-def merge_dicts(dict1, dict2):
-    for key, value in dict2.items():
-        if key in dict1:
-            dict1[key].extend(value)
-        else:
-            dict1[key] = value
-    return dict1
 
 
 def process_message(msg_key, msg):

@@ -1,6 +1,24 @@
 import uuid
 from config import ES, ES_RL_PROPERTY
-    
+
+
+def merge_dicts(dict1, dict2):
+    for key, value in dict2.items():
+        if key in dict1:
+            dict1[key].extend(value)
+        else:
+            dict1[key] = value
+    return dict1
+
+def unique_dict_list(dict_list):
+    seen = set()
+    unique_list = []
+    for d in dict_list:
+        if d["id"] not in seen:
+            seen.add(d["id"])
+            unique_list.append(d)
+    return unique_list
+
 
 def build_relation_message(val_a, val_b, type_a=None, type_b=None):
     if type_a and type_b:
