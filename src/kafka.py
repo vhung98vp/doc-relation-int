@@ -23,7 +23,7 @@ def process_vals_by_type(vals_by_type, type, doc_id):
             val_to_recs, found_ids = query_result
             for item in found_ids:
                 send_output_to_kafka(build_relation_message(item, doc_id, type, ES_DOC))
-            logger.info(f"Processed {len(found_ids)} existing {type['entity_type']} entities.")
+            logger.info(f"Processed {len(found_ids)} existing {type['entity']} entities.")
             return val_to_recs
     return {}
 
