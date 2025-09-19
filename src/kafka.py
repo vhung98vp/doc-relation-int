@@ -57,7 +57,7 @@ def process_message(msg_key, msg):
     try:
         data = json.loads(msg)
         
-        for key in ['_fs_internal_id', 'ids', 'table_ids']:
+        for key in ['_fs_internal_id', 'ids']:
             if key not in data:
                 raise ValueError(f"Missing required field '{key}' in message")
         # Group by type (pattern)
@@ -75,6 +75,8 @@ def process_message(msg_key, msg):
             vals_table = data.get('table_ids', [])
             if vals_table:
                 process_vals_table(vals_table, val_to_recs)
+            else:
+                logger.warning("No table_ids found in message.")
 
         logger.info(f"Message {msg_key} processed in time (s): {time.time()-start_time:4f}.")
 
