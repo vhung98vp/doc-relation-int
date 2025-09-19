@@ -59,7 +59,7 @@ def process_message(msg_key, msg):
         
         for key in ['_fs_internal_id', 'ids', 'table_ids']:
             if key not in data:
-                logger.error(f"Missing field '{key}' in message")
+                raise ValueError(f"Missing required field '{key}' in message")
         # Group by type (pattern)
         doc_id = data['_fs_internal_id']
         vals_search = data.get('ids', [])

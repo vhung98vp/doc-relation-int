@@ -57,4 +57,5 @@ def hits_to_records(hits, query_vals):
                 else:
                     if prop_val in vals:
                         val_to_recs.setdefault(prop_val, []).append(hit_to_record(hit))
+    logger.info(f"Found {len(ids)} entities for {len(val_to_recs.keys())} types")
     return val_to_recs, ids
