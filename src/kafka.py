@@ -18,7 +18,7 @@ consumer.subscribe([KAFKA['input_topic']])
 def process_vals_by_type(vals_by_type, type, doc_id):
     vals = {k: v for k, v in vals_by_type.items() if k in type['search_fields']}
     if vals:
-        query_result = query_entity(vals, type['index'])
+        query_result = query_entity(vals, type)
         if query_result:
             val_to_recs, found_ids = query_result
             for item in found_ids:

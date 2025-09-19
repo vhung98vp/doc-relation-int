@@ -2,8 +2,8 @@ import requests
 from config import ES, get_logger
 logger = get_logger(__name__)
 
-def query_entity(query_vals, index, size=10000):
-    url = f"{ES['url']}/{index}/_search"
+def query_entity(query_vals, type, size=10000):
+    url = f"{ES['url']}/{type['index']}/_search"
     auth = (ES['user'], ES['password']) if ES['user'] and ES['password'] else None
     headers = {'Content-Type': 'application/json'}
     query = {
@@ -27,7 +27,7 @@ def query_entity(query_vals, index, size=10000):
         response.raise_for_status()
         response_hits = response.json()['hits']['hits']
         if not response_hits:
-            logger.warning(f"No entity found for values: {query_vals}")
+            logger.warning(f"No entity {type['entity']} found for values: {query_vals}")
             return None
         else:
             return hits_to_records(response_hits, query_vals)
