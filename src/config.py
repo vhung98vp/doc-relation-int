@@ -48,14 +48,14 @@ ES = {
 
 ES_PERSON = {
     'entity': os.environ.get('ES_PERSON_ENTITY_TYPE'),
-    'source': int(os.environ.get('ES_PERSON_ENTITY_SOURCE', 0)),
+    # 'source': int(os.environ.get('ES_PERSON_ENTITY_SOURCE', 0)),
     'data_source': int(os.environ.get('ES_PERSON_ENTITY_DATASOURCE', 0)),
     'index': f"{os.environ.get('ES_PERSON_ENTITY_DATASOURCE', 0)}{ES['index_suffix']}"
 }
 
 ES_COMPANY = {
     'entity': os.environ.get('ES_COMPANY_ENTITY_TYPE'),
-    'source': int(os.environ.get('ES_COMPANY_ENTITY_SOURCE', 0)),
+    # 'source': int(os.environ.get('ES_COMPANY_ENTITY_SOURCE', 0)),
     'data_source': int(os.environ.get('ES_COMPANY_ENTITY_DATASOURCE', 0)),
     'index': f"{os.environ.get('ES_PERSON_ENTITY_DATASOURCE', 0)}{ES['index_suffix']}"
 }
