@@ -51,7 +51,7 @@ def hits_to_records(hits, query_vals):
             prop_val = hit['_source']['properties'].get(key)
             if prop_val:
                 record = hit_to_record(hit)
-                ids.add(record)
+                ids.append(record)
                 if isinstance(prop_val, list):
                     for v in prop_val:
                         if v in vals:
