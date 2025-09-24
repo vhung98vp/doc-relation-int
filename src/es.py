@@ -20,22 +20,18 @@ def query_entity(query_vals, type, size=10000):
         "_source": ["id", "entity", "source", "data_source", "properties"],
         "size": size
     }
-    try:
-        response = requests.get(url=url,
-                                    headers=headers,
-                                    auth=auth,
-                                    json=query)
-        response.raise_for_status()
-        response_hits = response.json()['hits']['hits']
-        if not response_hits:
-            logger.warning(f"No entity {type['entity']} found for values: {query_vals}")
-            return None
-        else:
-            return hits_to_records(response_hits, query_vals)
-
-    except Exception as e:
-        logger.error(f"Failed to fetch from Elasticsearch: {e}")
+    response = requests.get(url=url,
+                                headers=headers,
+                                auth=auth,
+                                json=query)
+    response.raise_for_status()
+    response_hits = response.json()['hits']['hits']
+    if not response_hits:
+        logger.warning(f"No entity {type['entity']} found for values: {query_vals}")
         return None
+    else:
+        return hits_to_records(response_hits, query_vals)
+
 
 
 def hit_to_record(hit):
