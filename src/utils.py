@@ -1,6 +1,8 @@
 import uuid
 from config import ES, ES_RL_PROPERTY
 
+def build_relation_id(val_a, val_b, relation_type=ES['relation_type'], namespace=ES['namespace_uuid']):
+    return str(uuid.uuid5(namespace, f"{relation_type}:{val_a}:{val_b}"))
 
 def merge_dicts(dict1, dict2):
     for key, value in dict2.items():
@@ -22,9 +24,10 @@ def unique_dict_list(dict_list):
 
 def build_relation_message(val_a, val_b, type_b=None):
     if type_b:
+        relation_id = build_relation_id(val_a['id'], val_b)
         return {
             ES_RL_PROPERTY['relation_type']: ES['relation_type'],
-            ES_RL_PROPERTY['relation_id']: str(uuid.uuid4()),
+            ES_RL_PROPERTY['relation_id']: relation_id,
             ES_RL_PROPERTY['from_entity']: val_a['id'],
             ES_RL_PROPERTY['to_entity']: val_b,
             ES_RL_PROPERTY['from_entity_type']: val_a['entity'],
@@ -36,9 +39,10 @@ def build_relation_message(val_a, val_b, type_b=None):
             ES_RL_PROPERTY['create_user']: ES['create_user']
         }
     else:
+        relation_id = build_relation_id(val_a['id'], val_b['id'])
         return {
             ES_RL_PROPERTY['relation_type']: ES['relation_type'],
-            ES_RL_PROPERTY['relation_id']: str(uuid.uuid4()),
+            ES_RL_PROPERTY['relation_id']: relation_id,
             ES_RL_PROPERTY['from_entity']: val_a['id'],
             ES_RL_PROPERTY['to_entity']: val_b['id'],
             ES_RL_PROPERTY['from_entity_type']: val_a['entity'],

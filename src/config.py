@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import logging
+import uuid
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,7 +44,8 @@ ES = {
     'password': os.environ.get('ES_PASSWORD'),
     'relation_type': os.environ.get('ES_RELATION_TYPE'),
     'create_user': int(os.environ.get('ES_CREATE_USER', 1)),
-    'index_suffix': os.environ.get('ES_INDEX_SUFFIX', '_idx')
+    'index_suffix': os.environ.get('ES_INDEX_SUFFIX', '_idx'),
+    'namespace_uuid': uuid.UUID(os.environ.get('ES_NAMESPACE_UUID', '6ba7b810-9dad-11d1-80b4-00c04fd430c8'))
 }
 
 ES_PERSON = {
